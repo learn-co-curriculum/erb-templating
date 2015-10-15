@@ -12,7 +12,7 @@ class Movie
   end
 
   def url
-    "#{title.downcase.gsub(' ', '_')}.html"
+    "#{title.downcase.gsub(' ', '_').gsub('\'',"")}.html"
   end
 
   def self.all
