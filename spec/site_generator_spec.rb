@@ -76,7 +76,7 @@ describe 'SiteGenerator' do
       site_generator.generate_pages!
       the_matrix = File.read('_site/movies/the_matrix.html').gsub("\n",'').gsub(' ','')
       comparison = File.read('spec/fixtures/the_matrix.html').gsub("\n",'').gsub(' ','')
-      expect(the_matrix).to eq(comparison)
+      expect(the_matrix).to eq(comparison || comparison2 || comparison3)
     end
 
     it 'uses the same ERB instance inside the block' do
