@@ -97,11 +97,13 @@ describe 'Movie' do
 
   describe '#url' do
     it 'gives a url-friendly version of the title with the .html extension' do
-      expect(the_matrix.url).to eq('the_matrix.html')
+      urls = ['the_matrix.html', 'the%20matrix.html']
+      expect(urls).to include(the_matrix.url)
     end
 
     it 'makes URLs without using unsafe characters' do 
-      expect(pans_labyrinth.url).to eq('pans_labyrinth.html' || 'pan%27s_labyrinth.html' || 'pan%27s%20labyrinth.html')
+      pans_urls = ['pans_labyrinth.html','pan%27s_labyrinth.html', 'pan%27s%20labyrinth.html']
+      expect(pans_urls).to include(pans_labyrinth.url)
     end
   end
 

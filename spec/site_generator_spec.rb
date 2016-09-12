@@ -52,8 +52,11 @@ describe 'SiteGenerator' do
     it 'creates index.html in the _site directory' do
       site_generator.make_index!
       comparison = File.read('spec/fixtures/index.html')
+      comparison2 = File.read('spec/fixtures/index2.html')
+      comparison3 = File.read('spec/fixtures/index3.html')
       index = File.read('_site/index.html')
-      expect(strip_heredoc(index)).to eq(strip_heredoc(comparison))
+      comp_array = [strip_heredoc(comparison),strip_heredoc(comparison2),strip_heredoc(comparison3)]
+      expect(comp_array).to include(strip_heredoc(index))
     end
 
     it 'does NOT use erb' do
@@ -74,9 +77,16 @@ describe 'SiteGenerator' do
 
     it 'makes html pages that follow a specific layout' do
       site_generator.generate_pages!
-      the_matrix = File.read('_site/movies/the_matrix.html').gsub("\n",'').gsub(' ','')
+      if File.exists?('_site/movies/the_matrix.html')
+        the_matrix = File.read('_site/movies/the_matrix.html').gsub("\n",'').gsub(' ','')
+      else
+        the_matrix = File.read('_site/movies/the%20matrix.html').gsub("\n",'').gsub(' ','')
+      end
       comparison = File.read('spec/fixtures/the_matrix.html').gsub("\n",'').gsub(' ','')
-      expect(the_matrix).to eq(comparison)
+      comparison2 = File.read('spec/fixtures/the_matrix2.html').gsub("\n",'').gsub(' ','')
+      comparison3 = File.read('spec/fixtures/the_matrix3.html').gsub("\n",'').gsub(' ','')
+      comp = [comparison, comparison2, comparison3]
+      expect(comp).to include(the_matrix)
     end
 
     it 'uses the same ERB instance inside the block' do
